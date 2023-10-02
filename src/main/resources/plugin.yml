@@ -1,0 +1,14 @@
+name: PrisonEscape
+version: '${project.version}'
+main: com.lunarmeal.prisonescape.PrisonEscape
+api-version: '1.20'
+author: LunarMeal
+description: Allow players create their prison,or challenge to escape from someone else's prison
+depend: [Residence,LuckPerms,WorldEdit]
+softdepend: [CMI]
+commands:
+  prisonescape:
+    description: basic command
+    aliases:
+      - psecp
+      - pecp

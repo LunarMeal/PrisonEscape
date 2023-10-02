@@ -1,0 +1,11 @@
+#监狱逃离插件配置
+#语言
+language: Chinese
+#世界黑名单
+worldBlackList: []
+#逃离时间
+escapeTime: 15
+#默认囚犯人数
+playerNum: 2
+#默认监狱赌注
+counter: 10.00
