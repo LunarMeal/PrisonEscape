@@ -23,7 +23,7 @@ public class DatabaseManager {
             Class.forName("org.sqlite.JDBC");
             connection = DriverManager.getConnection("jdbc:sqlite:" + databasePath);
         } catch (ClassNotFoundException | SQLException e) {
-            e.printStackTrace(); //NOPMD - suppressed AvoidPrintStackTrace - TODO explain reason for suppression
+            e.printStackTrace();
         }
     }
 
