@@ -38,8 +38,6 @@ public class EcoManager {
             return false;
         if(economyManager == null)
             return false;
-        if(!economyManager.isEnabled())
-            return false;
-        return true;
+        return economyManager.isEnabled();
     }
 }

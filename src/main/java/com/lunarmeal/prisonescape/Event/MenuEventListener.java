@@ -109,7 +109,7 @@ public class MenuEventListener implements Listener {
                 lores.add(Lore7);
                 j++;
             }
-            challengeMenu.addItem(createGuiItem(Material.IRON_BARS,i.getPrisonName(),lores.toArray(new String[lores.size()])));
+            challengeMenu.addItem(createGuiItem(Material.IRON_BARS,i.getPrisonName(),lores.toArray(new String[0])));
         }
         // 设置更多槽位...
         // 打开菜单

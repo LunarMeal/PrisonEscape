@@ -7,6 +7,7 @@ import org.bukkit.Location;
 import java.sql.*;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 import static com.bekvon.bukkit.residence.api.ResidenceApi.getResidenceManager;
 
@@ -69,7 +70,7 @@ public class DatabaseManager {
             statement.setString(2, prisonData.getResName());
             statement.setString(3, prisonData.getPrisonOwner());
             Location loc = prisonData.getPrisonSpawn();
-            String strLoc = loc.getWorld().getName() + ":" + loc.getX() + ":" + loc.getY() + ":" + loc.getZ() + ":" + loc.getYaw() + ":" + loc.getPitch();
+            String strLoc = Objects.requireNonNull(loc.getWorld()).getName() + ":" + loc.getX() + ":" + loc.getY() + ":" + loc.getZ() + ":" + loc.getYaw() + ":" + loc.getPitch();
             statement.setString(4, strLoc);
             statement.setFloat(5, prisonData.getCounter());
             statement.setString(6, prisonData.getRankingList().toString());
@@ -156,7 +157,7 @@ public class DatabaseManager {
                 String[] strs = strings.split(",");
                 for (String str : strs) {
                     String playerName = str.split("=")[0];
-                    Integer timeScore = Integer.parseInt(str.split("=")[1]);;
+                    Integer timeScore = Integer.parseInt(str.split("=")[1]);
                     prisonData.getRankingList().put(playerName, timeScore);
                 }
 

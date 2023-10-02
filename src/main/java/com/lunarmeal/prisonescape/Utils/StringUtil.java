@@ -7,15 +7,11 @@ public class StringUtil {
     public static boolean isNumeric(String str) {
         Pattern pattern = Pattern.compile("-?[0-9]+\\.?[0-9]*");
         Matcher isNum = pattern.matcher(str);
-        if (!isNum.matches()) {
-            return false;
-        }
-        return true;
+        return isNum.matches();
     }
     /**
      * 判断是否含有特殊字符
      *
-     * @param str
      * @return true为包含，false为不包含
      */
     public static boolean isSpecialChar(String str) {

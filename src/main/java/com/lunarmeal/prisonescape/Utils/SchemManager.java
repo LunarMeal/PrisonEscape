@@ -21,10 +21,9 @@ import org.bukkit.Location;
 import org.bukkit.util.Vector;
 
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.util.Objects;
 
 public class SchemManager {
     // 保存领地为schem文件的示例
@@ -32,7 +31,7 @@ public class SchemManager {
     public static void saveSchematic(String filePath, Location loc1, Location loc2) {
         File schemFile = new File(filePath);
 
-        World world = BukkitAdapter.adapt(loc1.getWorld());
+        World world = BukkitAdapter.adapt(Objects.requireNonNull(loc1.getWorld()));
         CuboidRegion region = new CuboidRegion(BukkitAdapter.asBlockVector(loc1), BukkitAdapter.asBlockVector(loc2));
         BlockArrayClipboard clipboard = new BlockArrayClipboard(region);
 
@@ -54,7 +53,7 @@ public class SchemManager {
 
     public static void loadAndPasteSchematic(String filePath, Location pasteLocation) {
         File schemFile = new File(filePath);
-        World world = BukkitAdapter.adapt(pasteLocation.getWorld());
+        World world = BukkitAdapter.adapt(Objects.requireNonNull(pasteLocation.getWorld()));
         if (!schemFile.exists()) {
             // 文件不存在
             return;
@@ -80,7 +79,7 @@ public class SchemManager {
     }
 
     public static void clearEntitiesInRegion(Location loc, Vector min, Vector max) {
-        World world = BukkitAdapter.adapt(loc.getWorld());
+        World world = BukkitAdapter.adapt(Objects.requireNonNull(loc.getWorld()));
         for (Entity entity : world.getEntities()) {
             Vector3 entityLocation = entity.getLocation().toVector();
 

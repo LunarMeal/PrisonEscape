@@ -35,8 +35,7 @@ public class PrisonData {
         this.escapeTime = plugin.escapeTime;
         this.taskList = new HashMap<>();
         this.rankingList = new HashMap<>();
-        Map<String, Boolean> deepCopy = new HashMap<>();
-        deepCopy.putAll(resFlags);
+        Map<String, Boolean> deepCopy = new HashMap<>(resFlags);
         this.resFlags = deepCopy;
         this.prisonOwner = null;
         this.counter = plugin.counter;
@@ -87,8 +86,7 @@ public class PrisonData {
     }
 
     public void setResFlags(Map<String, Boolean> resFlags) {
-        Map<String, Boolean> deepCopy = new HashMap<>();
-        deepCopy.putAll(resFlags);
+        Map<String, Boolean> deepCopy = new HashMap<>(resFlags);
         this.resFlags = deepCopy;
     }
 
