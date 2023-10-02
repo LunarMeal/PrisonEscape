@@ -10,7 +10,7 @@ import java.util.stream.Collectors;
  */
 public class MapSortUtil {
 
-    private static Comparator<Map.Entry> comparatorByKeyAsc = (Map.Entry o1, Map.Entry o2) -> {
+    private static final Comparator<Map.Entry> comparatorByKeyAsc = (Map.Entry o1, Map.Entry o2) -> {
         if (o1.getKey() instanceof Comparable) {
             return ((Comparable) o1.getKey()).compareTo(o2.getKey());
         }
@@ -18,7 +18,7 @@ public class MapSortUtil {
     };
 
 
-    private static Comparator<Map.Entry> comparatorByKeyDesc = (Map.Entry o1, Map.Entry o2) -> {
+    private static final Comparator<Map.Entry> comparatorByKeyDesc = (Map.Entry o1, Map.Entry o2) -> {
         if (o1.getKey() instanceof Comparable) {
             return ((Comparable) o2.getKey()).compareTo(o1.getKey());
         }
@@ -26,7 +26,7 @@ public class MapSortUtil {
     };
 
 
-    private static Comparator<Map.Entry> comparatorByValueAsc = (Map.Entry o1, Map.Entry o2) -> {
+    private static final Comparator<Map.Entry> comparatorByValueAsc = (Map.Entry o1, Map.Entry o2) -> {
         if (o1.getValue() instanceof Comparable) {
             return ((Comparable) o1.getValue()).compareTo(o2.getValue());
         }
@@ -34,7 +34,7 @@ public class MapSortUtil {
     };
 
 
-    private static Comparator<Map.Entry> comparatorByValueDesc = (Map.Entry o1, Map.Entry o2) -> {
+    private static final Comparator<Map.Entry> comparatorByValueDesc = (Map.Entry o1, Map.Entry o2) -> {
         if (o1.getValue() instanceof Comparable) {
             return ((Comparable) o2.getValue()).compareTo(o1.getValue());
         }
