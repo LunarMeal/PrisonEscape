@@ -25,7 +25,6 @@ public class PlaceholderFormat {
         int argIndex = 0;
 
         while (matcher.find()) {
-            String argName = matcher.group(1);
             Object argValue = getArgumentValue(args, argIndex);
             argIndex++;
 

@@ -439,7 +439,7 @@ public class PrisonEscapeCommandListener implements CommandExecutor {
                                     player.spigot().sendMessage(component);
                                 }
                                 if(i.equals(prisonData)){
-                                    Location spawnLoc = Bukkit.getWorld("world").getSpawnLocation();
+                                    Location spawnLoc = Objects.requireNonNull(Bukkit.getWorld("world")).getSpawnLocation();
                                     // 使用玩家的teleport方法将其传送到出生点
                                     player.teleport(spawnLoc);
                                 }
@@ -447,7 +447,6 @@ public class PrisonEscapeCommandListener implements CommandExecutor {
                             //非典狱长挑战，执行失败逻辑
                             for(PrisonData i: plugin.prisonDataList.values()){
                                 //实际挑战
-                                ClaimedResidence res = getResidenceManager().getByName(i.getResName());
                                 if(i.equals(prisonData)){
                                     //非典狱长挑战，执行失败逻辑
                                     TextComponent component = new TextComponent(plugin.prisonConfig.message.get("ExitChallengeMsg"));
@@ -593,7 +592,7 @@ public class PrisonEscapeCommandListener implements CommandExecutor {
                     pData.getTaskList().remove(timerPlayer);
                     plugin.prisonerList.remove(timerPlayer, pData);
 
-                    Location spawnLoc = Bukkit.getWorld("world").getSpawnLocation();
+                    Location spawnLoc = Objects.requireNonNull(Bukkit.getWorld("world")).getSpawnLocation();
 
                     if(plugin.economyManager.hasEconomy()) {
                         plugin.economyManager.setMoney(timerPlayer, -pData.getCounter());

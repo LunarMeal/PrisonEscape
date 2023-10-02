@@ -24,6 +24,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.nio.file.Files;
 
 public class SchemManager {
     // 保存领地为schem文件的示例
@@ -44,7 +45,7 @@ public class SchemManager {
         } catch (WorldEditException e) {
             throw new RuntimeException(e);
         }
-        try (ClipboardWriter writer = BuiltInClipboardFormat.SPONGE_SCHEMATIC.getWriter(new FileOutputStream(schemFile))) {
+        try (ClipboardWriter writer = BuiltInClipboardFormat.SPONGE_SCHEMATIC.getWriter(Files.newOutputStream(schemFile.toPath()))) {
                 writer.write(clipboard);
         } catch (IOException e) {
             e.printStackTrace();
@@ -59,20 +60,22 @@ public class SchemManager {
             return;
         }
         ClipboardFormat format = ClipboardFormats.findByFile(schemFile);
-        try (ClipboardReader reader = format.getReader(new FileInputStream(schemFile))) {
-                Clipboard clipboard = reader.read();
-                try (EditSession editSession = WorldEdit.getInstance().newEditSession(world)) {
-                    Operation operation = new ClipboardHolder(clipboard)
-                            .createPaste(editSession)
-                            .to(BlockVector3.at(pasteLocation.getX(), pasteLocation.getY(), pasteLocation.getZ()))
-                            // configure here
-                            .build();
-                    Operations.complete(operation);
-                } catch (WorldEditException e) {
-                    throw new RuntimeException(e);
-                }
-        }catch (IOException e) {
-            e.printStackTrace();
+        if (format != null) {
+            try (ClipboardReader reader = format.getReader(Files.newInputStream(schemFile.toPath()))) {
+                    Clipboard clipboard = reader.read();
+                    try (EditSession editSession = WorldEdit.getInstance().newEditSession(world)) {
+                        Operation operation = new ClipboardHolder(clipboard)
+                                .createPaste(editSession)
+                                .to(BlockVector3.at(pasteLocation.getX(), pasteLocation.getY(), pasteLocation.getZ()))
+                                // configure here
+                                .build();
+                        Operations.complete(operation);
+                    } catch (WorldEditException e) {
+                        throw new RuntimeException(e);
+                    }
+            }catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 

@@ -6,8 +6,7 @@ import org.bukkit.World;
 
 public class LocationSerialize {
     public static String LocToStr(Location loc){
-        String strLoc = loc.getWorld().getName() + ":" + loc.getX() + ":" + loc.getY() + ":" + loc.getZ() + ":" + loc.getYaw() + ":" + loc.getPitch();
-        return strLoc;
+        return loc.getWorld().getName() + ":" + loc.getX() + ":" + loc.getY() + ":" + loc.getZ() + ":" + loc.getYaw() + ":" + loc.getPitch();
     }
     public static Location StrToLoc(String strLoc){
         String[] parts = strLoc.split(":");

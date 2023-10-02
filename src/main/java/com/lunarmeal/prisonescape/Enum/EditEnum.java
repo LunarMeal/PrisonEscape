@@ -5,5 +5,5 @@ public enum EditEnum {
     PRISONNAME,
     PLAYERNUM,
     COUNTER,
-    ESCAPETIME;
+    ESCAPETIME
 }

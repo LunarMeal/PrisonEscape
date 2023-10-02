@@ -17,9 +17,9 @@ public class PrisonData {
     private int prisonID;
     private int playerNum;
     private int escapeTime;
-    private Map<String,Integer> rankingList;
+    private final Map<String,Integer> rankingList;
     private Map<String,Boolean> resFlags;
-    private Map<Player, PrisonTask> taskList;
+    private final Map<Player, PrisonTask> taskList;
     private String prisonOwner;
     private float counter;
 

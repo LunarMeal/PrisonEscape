@@ -39,10 +39,10 @@ public class MenuEventListener implements Listener {
         final ItemMeta meta = item.getItemMeta();
 
         // Set the name of the item
-        meta.setDisplayName(name);
-
-        // Set the lore of the item
-        meta.setLore(Arrays.asList(lore));
+        if (meta != null) {
+            meta.setDisplayName(name);
+            meta.setLore(Arrays.asList(lore));
+        }
 
         item.setItemMeta(meta);
 
@@ -177,7 +177,7 @@ public class MenuEventListener implements Listener {
             event.setCancelled(true);
             ItemStack item = event.getCurrentItem();
             if(item!=null) {
-                player.performCommand("pecp challenge " + item.getItemMeta().getDisplayName());
+                player.performCommand("pecp challenge " + Objects.requireNonNull(item.getItemMeta()).getDisplayName());
                 player.closeInventory();
             }
         }
@@ -186,8 +186,7 @@ public class MenuEventListener implements Listener {
     public void onInventoryClose(InventoryCloseEvent event) {
         Collection<Inventory> editCollect = editMenus.values();
         Collection<Inventory> challengeCollect = challengeMenus.values();
-        if (editCollect.contains(event.getInventory()))
-            editCollect.remove(event.getInventory());
+        editCollect.remove(event.getInventory());
         if (challengeCollect.contains((event.getInventory())))
             challengeCollect.remove(event.getInventory());
     }

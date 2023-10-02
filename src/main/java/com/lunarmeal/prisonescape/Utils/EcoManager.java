@@ -11,7 +11,7 @@ import org.bukkit.plugin.PluginManager;
 import static org.bukkit.Bukkit.getServer;
 
 public class EcoManager {
-    private Plugin CMIPlugin;
+    private final Plugin CMIPlugin;
     private EconomyManager economyManager;
 
     public EcoManager() {

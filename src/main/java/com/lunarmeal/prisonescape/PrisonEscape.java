@@ -16,10 +16,7 @@ import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public final class PrisonEscape extends JavaPlugin {
 
@@ -80,8 +77,8 @@ public final class PrisonEscape extends JavaPlugin {
         Bukkit.getConsoleSender().sendMessage("§b[PrisonEscape] 监狱逃脱插件，启动！！！");
         Bukkit.getConsoleSender().sendMessage("§b[PrisonEscape] 有问题请加作者QQ1745266439咨询");
 
-        Bukkit.getPluginCommand("prisonescape").setExecutor(new PrisonEscapeCommandListener());
-        Bukkit.getPluginCommand("prisonescape").setTabCompleter(new PrisonTabCompleter());
+        Objects.requireNonNull(Bukkit.getPluginCommand("prisonescape")).setExecutor(new PrisonEscapeCommandListener());
+        Objects.requireNonNull(Bukkit.getPluginCommand("prisonescape")).setTabCompleter(new PrisonTabCompleter());
 
         registerEvents();
     }

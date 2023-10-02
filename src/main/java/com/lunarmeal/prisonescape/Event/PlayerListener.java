@@ -20,6 +20,7 @@ import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 
 import java.util.Map;
+import java.util.Objects;
 
 import static com.bekvon.bukkit.residence.api.ResidenceApi.getResidenceManager;
 
@@ -33,8 +34,7 @@ public class PlayerListener implements Listener {
         // 获取退出游戏的玩家
         Player player = event.getPlayer();
         player.closeInventory();
-        if(plugin.editorList.containsKey(player))
-            plugin.editorList.remove(player);
+        plugin.editorList.remove(player);
         if(plugin.waitingForChange!=null)
             if(plugin.waitingForChange.equals(player))
                 plugin.waitingForChange = null;
@@ -71,9 +71,8 @@ public class PlayerListener implements Listener {
             //非典狱长挑战，执行失败逻辑
             for(PrisonData i: plugin.prisonDataList.values()){
                 //实际挑战
-                ClaimedResidence res = getResidenceManager().getByName(i.getResName());
                 if(i.equals(prisonData)){
-                    Location spawnLoc = Bukkit.getWorld("world").getSpawnLocation();
+                    Location spawnLoc = Objects.requireNonNull(Bukkit.getWorld("world")).getSpawnLocation();
                     // 使用玩家的teleport方法将其传送到出生点
                     player.teleport(spawnLoc);
                 }
@@ -91,8 +90,7 @@ public class PlayerListener implements Listener {
     public void onPlayerDeath(PlayerDeathEvent event) {
         // 获取死亡的玩家
         Player player = event.getEntity();
-        if(plugin.editorList.containsKey(player))
-            plugin.editorList.remove(player);
+        plugin.editorList.remove(player);
         if(plugin.waitingForChange!=null)
             if(plugin.waitingForChange.equals(player))
                 plugin.waitingForChange = null;
@@ -133,7 +131,6 @@ public class PlayerListener implements Listener {
             //非典狱长挑战，执行失败逻辑
             for(PrisonData i: plugin.prisonDataList.values()){
                 //实际挑战
-                ClaimedResidence res = getResidenceManager().getByName(i.getResName());
                 if(i.equals(prisonData)){
                     //非典狱长挑战，执行失败逻辑
                     TextComponent component = new TextComponent(plugin.prisonConfig.message.get("FailChallengeDeathMsg"));
@@ -147,8 +144,7 @@ public class PlayerListener implements Listener {
     public void onPlayerCommand(PlayerCommandPreprocessEvent event) {
         Player player = event.getPlayer();
         String command = event.getMessage().toLowerCase(); // 将指令转换为小写
-        if(plugin.editorList.containsKey(player))
-            plugin.editorList.remove(player);
+        plugin.editorList.remove(player);
         if(plugin.waitingForChange!=null)
             if(plugin.waitingForChange.equals(player))
                 plugin.waitingForChange = null;
