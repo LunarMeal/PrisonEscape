@@ -129,7 +129,7 @@ public class PrisonConfig {
         message.put("ChallengeLore7",langConfig.getString("ChallengeLore7"));
     }
     public void saveLang(){
-        plugin.saveResource("lang/Chinese.yml",true);
+        plugin.saveResource("lang/Chinese.yml",false);
         //plugin.saveResource("lang/English.yml",true);
     }
     private void getTranslation() {

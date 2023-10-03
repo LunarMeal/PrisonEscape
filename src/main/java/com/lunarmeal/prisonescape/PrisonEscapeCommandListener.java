@@ -514,6 +514,7 @@ public class PrisonEscapeCommandListener implements CommandExecutor {
                 this.countdown = count;
                 this.maxCountdown = count;
                 this.pData = pData;
+                this.savedInventory = timerPlayer.getInventory().getContents().clone();
                 String msg = new PlaceholderFormat(plugin.prisonConfig.message.get("EscapeTimeTitle")).format(countdown);
                 this.bossBar = Bukkit.createBossBar(msg, BarColor.GREEN, BarStyle.SOLID);
                 this.bossBar.addPlayer(timerPlayer);
@@ -548,6 +549,7 @@ public class PrisonEscapeCommandListener implements CommandExecutor {
         }
         // 创建一个一次性的定时任务，延迟10秒后执行
         PrisonTask task = new ResOwnerTask(player, plugin.escapeTime, prisonData);
+        player.getInventory().clear();
         task.runTaskTimer(plugin,20L,20L);
 
         // 获取定时任务
@@ -575,6 +577,7 @@ public class PrisonEscapeCommandListener implements CommandExecutor {
                 this.countdown = count;
                 this.maxCountdown = count;
                 this.pData = pData;
+                this.savedInventory = timerPlayer.getInventory().getContents().clone();
                 String msg = new PlaceholderFormat(plugin.prisonConfig.message.get("EscapeTimeTitle")).format(countdown);
                 this.bossBar = Bukkit.createBossBar(msg, BarColor.GREEN, BarStyle.SOLID);
                 this.bossBar.addPlayer(timerPlayer);
@@ -617,6 +620,7 @@ public class PrisonEscapeCommandListener implements CommandExecutor {
             }
         }
         PrisonTask task = new ResChallengerTask(player, plugin.escapeTime,prisonData);
+        player.getInventory().clear();
         task.runTaskTimer(plugin, 20L,20L);
 
         // 获取定时任务
