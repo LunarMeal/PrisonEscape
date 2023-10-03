@@ -6,7 +6,7 @@ language: Chinese
 worldBlackList: []
 
 # 逃离时间 (Escape Time)
-escapeTime: 15
+escapeTime: 60
 
 # 默认囚犯人数 (Default Prisoner Count)
 playerNum: 2
