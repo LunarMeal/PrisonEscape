@@ -1,5 +1,6 @@
 package com.lunarmeal.prisonescape.Event;
 
+import com.bekvon.bukkit.residence.economy.ResidenceBank;
 import com.bekvon.bukkit.residence.protection.ClaimedResidence;
 import com.bekvon.bukkit.residence.protection.FlagPermissions;
 import com.lunarmeal.prisonescape.PrisonData;
@@ -83,6 +84,11 @@ public class PlayerListener implements Listener {
                 ClaimedResidence res = getResidenceManager().getByName(i.getResName());
                 if(player.getName().equals(res.getOwner()))
                     plugin.prisonTempList.remove(i.getPrisonName());
+                if(plugin.economyManager.hasEconomy()) {
+                    plugin.economyManager.setMoney(player, -i.getCounter());
+                    ResidenceBank bank = res.getBank();
+                    bank.setStoredMoney(bank.getStoredMoneyD()+i.getCounter());
+                }
             }
         }
     }
@@ -133,6 +139,12 @@ public class PlayerListener implements Listener {
                 //实际挑战
                 if(i.equals(prisonData)){
                     //非典狱长挑战，执行失败逻辑
+                    ClaimedResidence res = getResidenceManager().getByName(i.getResName());
+                    if(plugin.economyManager.hasEconomy()) {
+                        plugin.economyManager.setMoney(player, -i.getCounter());
+                        ResidenceBank bank = res.getBank();
+                        bank.setStoredMoney(bank.getStoredMoneyD()+i.getCounter());
+                    }
                     TextComponent component = new TextComponent(plugin.prisonConfig.message.get("FailChallengeDeathMsg"));
                     component.setColor(ChatColor.RED); // 设置文本颜色
                     player.spigot().sendMessage(component);

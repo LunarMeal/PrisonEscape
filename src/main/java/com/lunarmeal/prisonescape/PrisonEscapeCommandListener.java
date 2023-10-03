@@ -345,6 +345,12 @@ public class PrisonEscapeCommandListener implements CommandExecutor {
                     }
 
                     case "challenge":{
+                        if(plugin.prisonerList.containsKey(player)){
+                            component.setText(plugin.prisonConfig.message.get("plzCompleteMsg"));
+                            component.setColor(ChatColor.RED); // 设置文本颜色
+                            player.spigot().sendMessage(component);
+                            return true;
+                        }
                         if(args.length > 1){
                             if(plugin.prisonDataList.containsKey(args[1])){
                                 PrisonData prisonData = plugin.prisonDataList.get(args[1]);
