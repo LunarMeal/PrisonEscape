@@ -5,7 +5,7 @@ usage: "用法：\n
         /pecp remove <监狱名>    移除当前所在监狱\n
         /pecp list     展示服务器监狱列表\n
         /pecp challenge <监狱名>     挑战监狱\n
-        /pecp quit       放弃逃离监狱\n"
+        /pecp quit       放弃逃离监狱"
 plzCompleteMsg: "请先完成当前挑战！！！\n"
 worldBlacklistMsg: "该世界不允许创建监狱！！！\n"
 MustResCreateMsg: "必须在领地内创建监狱！！！"
