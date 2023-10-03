@@ -1,11 +1,15 @@
-#监狱逃离插件配置
-#语言
+# Prison Escape Plugin Configuration
+# 语言 (Language)
 language: Chinese
-#世界黑名单
+
+# 世界黑名单 (World Blacklist)
 worldBlackList: []
-#逃离时间
+
+# 逃离时间 (Escape Time)
 escapeTime: 15
-#默认囚犯人数
+
+# 默认囚犯人数 (Default Prisoner Count)
 playerNum: 2
-#默认监狱赌注
+
+# 默认监狱赌注 (Default Prison Wager)
 counter: 10.00
