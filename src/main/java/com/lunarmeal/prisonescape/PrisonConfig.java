@@ -129,8 +129,16 @@ public class PrisonConfig {
         message.put("ChallengeLore7",langConfig.getString("ChallengeLore7"));
     }
     public void saveLang(){
-        plugin.saveResource("lang/Chinese.yml",false);
-        //plugin.saveResource("lang/English.yml",true);
+        File langFolder = new File("plugins/PrisonEscape", "lang");
+        if (!langFolder.exists()) {
+            langFolder.mkdirs();
+        }
+        File langFile = new File(langFolder, "Chinese.yml");
+        if(!langFile.exists())
+            plugin.saveResource("lang/Chinese.yml",false);
+        langFile = new File(langFolder, "English.yml");
+        if(!langFile.exists())
+            plugin.saveResource("lang/English.yml",false);
     }
     private void getTranslation() {
         String selLanguage = config.getString("language");

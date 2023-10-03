@@ -6,8 +6,8 @@ usage: "用法：\n
         /pecp list     展示服务器监狱列表\n
         /pecp challenge <监狱名>     挑战监狱\n
         /pecp quit       放弃逃离监狱"
-plzCompleteMsg: "请先完成当前挑战！！！\n"
-worldBlacklistMsg: "该世界不允许创建监狱！！！\n"
+plzCompleteMsg: "请先完成当前挑战！！！"
+worldBlacklistMsg: "该世界不允许创建监狱！！！"
 MustResCreateMsg: "必须在领地内创建监狱！！！"
 ErrorMsg: "错误！！！"
 OnlyResOwnerCreateMsg: "只有领地主人才能在这创建监狱！！！"

@@ -1,13 +1,13 @@
 usage: "Usage:\n
-        /pecp create <prison name>     Create a prison in your current residence\n
+        /pecp create <prisonName>     Create a prison in your current residence\n
         /pecp setspawn      Set the current location as the prison respawn point\n
-        /pecp edit <prison name>     Open the prison editing menu\n
-        /pecp remove <prison name>    Remove the prison you're currently in\n
+        /pecp edit <prisonName>     Open the prison editing menu\n
+        /pecp remove <prisonName>    Remove the prison you're currently in\n
         /pecp list     Display the server's list of prisons\n
-        /pecp challenge <prison name>     Challenge the prison\n
+        /pecp challenge <prisonName>     Challenge the prison\n
         /pecp quit       Give up escaping from prison"
-plzCompleteMsg: "Please complete the current challenge first!!!\n"
-worldBlacklistMsg: "Prisons are not allowed in this world!!!\n"
+plzCompleteMsg: "Please complete the current challenge first!!!"
+worldBlacklistMsg: "Prisons are not allowed in this world!!!"
 MustResCreateMsg: "You must create a prison inside a residence!!!"
 ErrorMsg: "Error!!!"
 OnlyResOwnerCreateMsg: "Only the residence owner can create a prison here!!!"
