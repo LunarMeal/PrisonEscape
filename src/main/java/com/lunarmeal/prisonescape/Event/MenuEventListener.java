@@ -76,7 +76,7 @@ public class MenuEventListener implements Listener {
         player.openInventory(editMenu);
     }
     public void openChallengeMenu(Player player) {
-        Inventory challengeMenu = Bukkit.createInventory(null, 9, plugin.prisonConfig.message.get("ChallengeMenu"));
+        Inventory challengeMenu = Bukkit.createInventory(null, 54, plugin.prisonConfig.message.get("ChallengeMenu"));
         challengeMenus.put(player,challengeMenu);
         for(PrisonData i:plugin.prisonDataList.values()){
             ClaimedResidence res = getResidenceManager().getByName(i.getResName());
