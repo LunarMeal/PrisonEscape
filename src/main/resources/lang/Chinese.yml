@@ -5,7 +5,8 @@ usage: "用法：\n
         /pecp remove <监狱名>    移除当前所在监狱\n
         /pecp list     展示服务器监狱列表\n
         /pecp challenge <监狱名>     挑战监狱\n
-        /pecp quit       放弃逃离监狱"
+        /pecp quit       放弃越狱\n
+        /pecp rule    玩法规则"
 plzCompleteMsg: "请先完成当前挑战！！！"
 worldBlacklistMsg: "该世界不允许创建监狱！！！"
 MustResCreateMsg: "必须在领地内创建监狱！！！"
@@ -16,10 +17,10 @@ ResNameOnlyMsg: "此监狱名已被使用，请更换！！！"
 SetSpawnTipMsg: "请用指令/pecp setspawn <逃离时间> 设置监狱重生点并设置逃离时间"
 SetSpawnInResMsg: "必须在监狱内设置重生点！！！"
 MustOwnerSetSpawnMsg: "只有典狱长才能在这设置重生点！！！"
-OwnerChallengeMsg: "已设置重生点，请典狱长先挑战在{escapeTime}秒内逃出监狱，成功逃脱后即可注册监狱！"
-PlayerChallengeMsg: "请挑战在{escapeTime}秒内逃出监狱，成功逃脱后可获得奖励！"
+OwnerChallengeMsg: "已设置重生点，请典狱长先挑战在{escapeTime}秒内越狱，成功逃脱后即可注册监狱！"
+PlayerChallengeMsg: "请挑战在{escapeTime}秒内越狱，成功逃脱后可获得奖励！"
 CantSetSpawnChallengingMsg: "此监狱有人在挑战中，无法设置重生点"
-OwnerChallengeResetMsg: "已重新设置重生点，请典狱长先挑战在{escapeTime}秒内逃出监狱，成功逃脱后即可修改监狱！"
+OwnerChallengeResetMsg: "已重新设置重生点，请典狱长先挑战在{escapeTime}秒内越狱，成功逃脱后即可修改监狱！"
 MustCreateFirstMsg: "请先用/pecp create指令创建监狱区域！"
 NotHavePrisonMsg: "没有这个监狱！！！"
 NotHaveOPMsg: "服务器内无op，无法注册监狱，请先联系服务器管理员！！！"
@@ -63,10 +64,20 @@ ResChangeFlagMsg: "此领地为监狱，不能更改标志！！！"
 ResRemoveNoticeMsg: "检测到此领地已被删除，监狱挑战中止！！！"
 ResRemoveTipMsg: "检测到此领地已被注册为监狱，删除领地后监狱也会消失！！！"
 ResChangeSizeMsg: "此领地为监狱，不能更改领地尺寸！！！"
+RuleMsg: "规则：1.领地主人可以在自己的领地上创建监狱，创建监狱后自己将成为这个监狱的典狱长\n
+                2.设置监狱重生点和逃离时间(囚犯首次将传送到这里，并且要在规定时间内成功越狱，越狱即离开领地范围)\n
+                3.设置重生点后，典狱长需要先在规定的时间内成功越狱(对领地的权限会降级为囚犯)，中途死亡、退出或超时，监狱会注册失败(即无效)\n
+                4.典狱长成功越狱后，权限恢复，监狱成功注册，并且会显示典狱长的逃离时间，同时将保存监狱注册时的存档(防止典狱长建造无解的监狱)\n
+                5.成功注册后的监狱会显示在列表里，其他玩家可以找到并挑战越狱，成为囚犯\n
+                6.挑战开始后，监狱存档会恢复，并暂时没收囚犯身上的物品，囚犯需在规定的时间内成功越狱\n
+                7.成功越狱后，会记录下逃离所花的时间作为成绩，监狱排行榜将会记录前三名耗时最短的玩家\n
+                8.监狱可以设置赌注，典狱长在设置赌注后需要往监狱所在的领地银行存钱作为挑战资本(服务器需要开启经济支持)\n
+                9.当囚犯越狱成功后，将会从领地银行取走一笔赌注资金作为奖励，越狱失败则相反，囚犯的赌注资金存入银行作为惩罚，典狱长则获利\n
+                10.典狱长可以编辑监狱的一些属性，或者移除监狱，若监狱所在的领地主人变更，则典狱长也会进行变更"
 
 PrisonListTitle: "当前监狱列表："
 BeginChallengeTitle: "&a开始挑战！！！"
-SuccessChallengeTitle: "&a你已成功逃出此监狱！！！"
+SuccessChallengeTitle: "&a你已成功越狱！！！"
 EscapeTimeTitle: "逃离倒计时:{countdown}秒"
 
 ResListRow: " (领地：{ResName})"

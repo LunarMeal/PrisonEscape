@@ -5,7 +5,8 @@ usage: "Usage:\n
         /pecp remove <prisonName>    Remove the prison you're currently in\n
         /pecp list     Display the server's list of prisons\n
         /pecp challenge <prisonName>     Challenge the prison\n
-        /pecp quit       Give up escaping from prison"
+        /pecp quit       Give up escaping from prison\n
+        /pecp rule    Gameplay rules"
 plzCompleteMsg: "Please complete the current challenge first!!!"
 worldBlacklistMsg: "Prisons are not allowed in this world!!!"
 MustResCreateMsg: "You must create a prison inside a residence!!!"
@@ -63,6 +64,16 @@ ResChangeFlagMsg: "This residence is a prison and cannot change flags!!!"
 ResRemoveNoticeMsg: "The residence has been detected as removed, and the prison challenge has been aborted!!!"
 ResRemoveTipMsg: "The residence has been registered as a prison. After deleting the residence, the prison will also disappear!!!"
 ResChangeSizeMsg: "This residence is a prison and cannot change its size!!!"
+RuleMsg: "Rules: 1. Land owners can create prisons on their own land and become the warden of the prison.\n
+2. Set the prison's respawn point and escape time (prisoners will be teleported here initially and must escape within the specified time. Escaping from prison means leaving the territory).\n
+3. After setting the respawn point, the warden must successfully escape within the specified time (their land permissions will be downgraded to that of prisoners). If they die, quit, or timeout, the prison registration will fail (i.e., become invalid).\n
+4. After successfully escaping as the warden, their permissions are restored, the prison is registered as valid, and the warden's escape time is displayed. The prison's data at the time of registration is saved (to prevent wardens from creating impossible prisons).\n
+5. Registered prisons will be listed, and other players can find and challenge them to escape and become prisoners.\n
+6. Once a challenge begins, the prison's data is restored, and the challenger's items are temporarily confiscated. The challenger must escape within the specified time.\n
+7. After a successful escape, the time taken will be recorded as their score. The prison leaderboard will display the top three players with the shortest escape times.\n
+8. Prisons can set a wager. Wardens, after setting a wager, need to deposit money into the land's bank as challenge capital (requires server economy support).\n
+9. When a prisoner successfully escapes, a portion of the wager capital will be taken from the land's bank as a reward. If the prisoner fails to escape, the wager capital is deposited into the bank as a penalty, and the warden profits.\n
+10. Wardens can edit some attributes of the prison or remove it. If the land ownership of the prison changes, the warden will also change."
 
 PrisonListTitle: "Current Prison List:"
 BeginChallengeTitle: "&aStart the challenge!!!"

@@ -508,6 +508,12 @@ public class PrisonEscapeCommandListener implements CommandExecutor {
                         }
                         break;
                     }
+                    case "rule":{
+                        component.setText(plugin.prisonConfig.message.get("RuleMsg"));
+                        component.setColor(ChatColor.YELLOW); // 设置文本颜色
+                        player.spigot().sendMessage(component);
+                        break;
+                    }
                     default:{
                         component.setColor(ChatColor.GREEN); // 设置文本颜色
                         player.spigot().sendMessage(component);

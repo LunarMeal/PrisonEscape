@@ -90,6 +90,7 @@ public class PrisonConfig {
         message.put("ResRemoveNoticeMsg",langConfig.getString("ResRemoveNoticeMsg"));
         message.put("ResRemoveTipMsg",langConfig.getString("ResRemoveTipMsg"));
         message.put("ResChangeSizeMsg",langConfig.getString("ResChangeSizeMsg"));
+        message.put("RuleMsg",langConfig.getString("RuleMsg"));
 
         message.put("PrisonListTitle",langConfig.getString("PrisonListTitle"));
         message.put("BeginChallengeTitle",langConfig.getString("BeginChallengeTitle"));

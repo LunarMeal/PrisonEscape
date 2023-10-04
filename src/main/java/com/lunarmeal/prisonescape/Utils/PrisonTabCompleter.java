@@ -34,6 +34,7 @@ public class PrisonTabCompleter implements TabCompleter {
             suggestions.add("list");
             suggestions.add("challenge");
             suggestions.add("quit");
+            suggestions.add("rule");
         }
         if(args.length == 2 && "challenge".startsWith(args[0])){
             for(PrisonData i: plugin.prisonDataList.values()){
