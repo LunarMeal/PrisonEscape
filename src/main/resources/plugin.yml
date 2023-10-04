@@ -1,7 +1,7 @@
 name: PrisonEscape
 version: '${project.version}'
 main: com.lunarmeal.prisonescape.PrisonEscape
-api-version: '1.20'
+api-version: '1.19'
 author: LunarMeal
 description: Allow players create their prison,or challenge to escape from someone else's prison
 depend: [Residence,LuckPerms,WorldEdit]
