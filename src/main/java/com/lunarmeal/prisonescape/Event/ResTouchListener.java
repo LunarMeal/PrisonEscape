@@ -18,6 +18,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerMoveEvent;
 
+import java.io.File;
 import java.util.Map;
 
 import static com.bekvon.bukkit.residence.api.ResidenceApi.getResidenceManager;
@@ -72,11 +73,19 @@ public class ResTouchListener implements Listener {
                 if(prisonData.getPrisonID()!=-1) {
                     plugin.databaseManager.updateDataWithPname(prisonData);
                     //AreaDataHandler.saveAreaData("plugins/PrisonEscape/schems/prison_"+prisonData.getPrisonID()+".pdata",mainArea.getLowLocation(),mainArea.getHighLocation());
+                    File langFolder = new File("plugins/PrisonEscape", "schems");
+                    if (!langFolder.exists()) {
+                        langFolder.mkdirs();
+                    }
                     SchemManager.saveSchematic("plugins/PrisonEscape/schems/prison_"+prisonData.getPrisonID()+".schem",mainArea.getLowLocation(),mainArea.getHighLocation());
                 }
                 else {
                     int prisonID = plugin.databaseManager.insertData(prisonData);
                     prisonData.setPrisonID(prisonID);
+                    File langFolder = new File("plugins/PrisonEscape", "schems");
+                    if (!langFolder.exists()) {
+                        langFolder.mkdirs();
+                    }
                     SchemManager.saveSchematic("plugins/PrisonEscape/schems/prison_"+prisonID+".schem",mainArea.getLowLocation(),mainArea.getHighLocation());
                 }
                 TextComponent component = new TextComponent(plugin.prisonConfig.message.get("SuccessCreateMsg"));

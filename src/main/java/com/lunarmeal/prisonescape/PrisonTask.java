@@ -21,4 +21,8 @@ public abstract class PrisonTask extends BukkitRunnable {
     }
     public int getCountdown(){ return countdown;}
     public int getMaxCountdown(){ return maxCountdown;}
+
+    public ItemStack[] getSavedInventory() {
+        return savedInventory;
+    }
 }

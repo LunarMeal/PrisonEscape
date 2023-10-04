@@ -19,9 +19,13 @@ import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
+import org.bukkit.event.player.PlayerRespawnEvent;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.Map;
 import java.util.Objects;
+import java.util.concurrent.ConcurrentHashMap;
 
 import static com.bekvon.bukkit.residence.api.ResidenceApi.getResidenceManager;
 
@@ -53,7 +57,9 @@ public class PlayerListener implements Listener {
             //2.移除游戏进行列表
             plugin.prisonerList.remove(player);
             //3.典狱长挑战，则恢复原样
-            for(PrisonData i: plugin.prisonTempList.values()){
+            Map<String, PrisonData> map = new ConcurrentHashMap<>();
+            map.putAll(plugin.prisonTempList);
+            for(PrisonData i: map.values()){
                 //临时挑战
                 ClaimedResidence res = getResidenceManager().getByName(i.getResName());
                 if(player.getName().equals(i.getPrisonOwner())){
@@ -80,7 +86,9 @@ public class PlayerListener implements Listener {
             }
         }else{
             //不挑战，则检测是否为典狱长
-            for(PrisonData i: plugin.prisonTempList.values()){
+            Map<String, PrisonData> map = new ConcurrentHashMap<>();
+            map.putAll(plugin.prisonTempList);
+            for(PrisonData i: map.values()){
                 ClaimedResidence res = getResidenceManager().getByName(i.getResName());
                 if(player.getName().equals(res.getOwner()))
                     plugin.prisonTempList.remove(i.getPrisonName());
@@ -91,6 +99,7 @@ public class PlayerListener implements Listener {
                 }
             }
         }
+        plugin.prisonTempList.remove(player);
     }
     @EventHandler
     public void onPlayerDeath(PlayerDeathEvent event) {
@@ -108,13 +117,14 @@ public class PlayerListener implements Listener {
             if(prisonData.getTaskList().containsKey(player)){
                 PrisonTask task = prisonData.getTaskList().get(player);
                 task.cancel();
-                prisonData.getTaskList().remove(player);
             }
             prisonData.setFree(true);
             //2.移除游戏进行列表
             plugin.prisonerList.remove(player);
             //3.典狱长挑战，则恢复原样
-            for(PrisonData i: plugin.prisonTempList.values()){
+            Map<String, PrisonData> map = new ConcurrentHashMap<>();
+            map.putAll(plugin.prisonTempList);
+            for(PrisonData i: map.values()){
                 //临时挑战
                 ClaimedResidence res = getResidenceManager().getByName(i.getResName());
                 if(player.getName().equals(i.getPrisonOwner())){
@@ -149,6 +159,24 @@ public class PlayerListener implements Listener {
                     component.setColor(ChatColor.RED); // 设置文本颜色
                     player.spigot().sendMessage(component);
                 }
+            }
+        }
+    }
+    @EventHandler
+    public void onPlayerRespawn(PlayerRespawnEvent event){
+        Player player = event.getPlayer();
+        for(PrisonData i:plugin.prisonTempList.values()) {
+            if (i.getTaskList().containsKey(player)) {
+                PrisonTask task = i.getTaskList().get(player);
+                player.getInventory().setContents(task.getSavedInventory());
+                i.getTaskList().remove(player);
+            }
+        }
+        for(PrisonData i:plugin.prisonDataList.values()) {
+            if (i.getTaskList().containsKey(player)) {
+                PrisonTask task = i.getTaskList().get(player);
+                player.getInventory().setContents(task.getSavedInventory());
+                i.getTaskList().remove(player);
             }
         }
     }
@@ -230,12 +258,25 @@ public class PlayerListener implements Listener {
                             }else {
                                 if (StringUtil.isNumeric(input)) {
                                     prisonData.setEscapeTime(Integer.parseInt(input));
-                                    if (prisonData.getPrisonID() != -1)
-                                        plugin.databaseManager.updateDataWithRname(prisonData);
                                     String tip = new PlaceholderFormat(plugin.prisonConfig.message.get("NewEscapeTimeCompleteMsg")).format(input);
                                     TextComponent component = new TextComponent(tip);
                                     component.setColor(ChatColor.GREEN); // 设置文本颜色
                                     player.spigot().sendMessage(component);
+                                    class PlayerTask extends BukkitRunnable {
+                                        private Player timePlayer;
+                                        private PrisonData pData;
+                                        public PlayerTask() {
+                                            this.timePlayer = player;
+                                            this.pData = prisonData;
+                                        }
+
+                                        @Override
+                                        public void run() {
+                                            timePlayer.teleport(pData.getPrisonSpawn());
+                                            timePlayer.performCommand("pecp setspawn");
+                                        }
+                                    }
+                                    new PlayerTask().runTaskLater(plugin,1);
                                 }
                             }
                             break;

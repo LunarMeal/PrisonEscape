@@ -14,6 +14,7 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class ResChangedListener implements Listener {
     PrisonEscape plugin;
@@ -29,7 +30,9 @@ public class ResChangedListener implements Listener {
                 if(!i.isFree())
                     return;
         }
-        for(Map.Entry<Player, PrisonData> entry:plugin.prisonerList.entrySet()){
+        Map<Player, PrisonData> map = new ConcurrentHashMap<>();
+        map.putAll(plugin.prisonerList);
+        for(Map.Entry<Player, PrisonData> entry:map.entrySet()){
             Player prisonPlayer = entry.getKey();
             PrisonData prisonData = entry.getValue();
             if(prisonData.getResName().equals(res.getResidenceName())){
@@ -47,7 +50,9 @@ public class ResChangedListener implements Listener {
                 prisonPlayer.spigot().sendMessage(component);
             }
         }
-        for(Map.Entry<Player, PrisonData> entry:plugin.editorList.entrySet()){
+        map.clear();
+        map.putAll(plugin.editorList);
+        for(Map.Entry<Player, PrisonData> entry:map.entrySet()){
             Player editor = entry.getKey();
             PrisonData prisonData = entry.getValue();
             if(prisonData.getResName().equals(res.getResidenceName()))
@@ -93,7 +98,9 @@ public class ResChangedListener implements Listener {
     public void onResidenceDelete(ResidenceDeleteEvent event) {
         ClaimedResidence res = event.getResidence();
         Player player = event.getPlayer();
-        for(Map.Entry<Player, PrisonData> entry:plugin.prisonerList.entrySet()){
+        Map<Player, PrisonData> map = new ConcurrentHashMap<>();
+        map.putAll(plugin.prisonerList);
+        for(Map.Entry<Player, PrisonData> entry:map.entrySet()){
             Player prisonPlayer = entry.getKey();
             PrisonData prisonData = entry.getValue();
             if(prisonData.getResName().equals(res.getResidenceName())){
@@ -111,13 +118,17 @@ public class ResChangedListener implements Listener {
                 prisonPlayer.spigot().sendMessage(component);
             }
         }
-        for(Map.Entry<Player, PrisonData> entry:plugin.editorList.entrySet()){
+        map.clear();
+        map.putAll(plugin.editorList);
+        for(Map.Entry<Player, PrisonData> entry:map.entrySet()){
             Player editor = entry.getKey();
             PrisonData prisonData = entry.getValue();
             if(prisonData.getResName().equals(res.getResidenceName()))
                 plugin.editorList.remove(editor);
         }
-        for(PrisonData i : plugin.prisonTempList.values()){
+        Map<String, PrisonData> map1 = new ConcurrentHashMap<>();
+        map1.putAll(plugin.prisonTempList);
+        for(PrisonData i : map1.values()){
             if(i.getResName().equals(res.getResidenceName())){
                 if(player != null) {
                     TextComponent component = new TextComponent(plugin.prisonConfig.message.get("ResRemoveTipMsg"));
@@ -131,7 +142,9 @@ public class ResChangedListener implements Listener {
                 plugin.prisonTempList.remove(i.getPrisonName());
             }
         }
-        for(PrisonData i : plugin.prisonDataList.values()){
+        map1.clear();
+        map1.putAll(plugin.prisonDataList);
+        for(PrisonData i : map1.values()){
             if(i.getResName().equals(res.getResidenceName())){
                 if(player != null) {
                     TextComponent component = new TextComponent(plugin.prisonConfig.message.get("ResRemoveTipMsg"));

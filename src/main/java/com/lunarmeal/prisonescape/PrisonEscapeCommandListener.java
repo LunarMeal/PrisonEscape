@@ -6,6 +6,7 @@ import com.bekvon.bukkit.residence.protection.CuboidArea;
 import com.bekvon.bukkit.residence.protection.FlagPermissions;
 import com.lunarmeal.prisonescape.Utils.PlaceholderFormat;
 import com.lunarmeal.prisonescape.Utils.SchemManager;
+import com.lunarmeal.prisonescape.Utils.StringUtil;
 import com.lunarmeal.prisonescape.Utils.TitleMessage;
 import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.chat.TextComponent;
@@ -23,6 +24,7 @@ import org.bukkit.entity.Player;
 import org.checkerframework.checker.nullness.qual.NonNull;
 
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.logging.Level;
 
 import static com.bekvon.bukkit.residence.api.ResidenceApi.getResidenceManager;
@@ -158,7 +160,20 @@ public class PrisonEscapeCommandListener implements CommandExecutor {
                         boolean hasResult = false;
                         for(PrisonData i: plugin.prisonTempList.values()){
                             if(i.getResName().equals(res.getResidenceName())){
-                                String msg = new PlaceholderFormat(plugin.prisonConfig.message.get("OwnerChallengeMsg")).format(plugin.escapeTime);
+                                int escapeTime;
+                                if(args.length > 1)
+                                    if(StringUtil.isNumeric(args[1])) {
+                                        escapeTime = Integer.parseInt(args[1]);
+                                        if(escapeTime < plugin.escapeTime){
+                                            String tip = new PlaceholderFormat(plugin.prisonConfig.message.get("NewEscapeTimeAtLeastMsg")).format(plugin.escapeTime);
+                                            component = new TextComponent(tip);
+                                            component.setColor(ChatColor.RED); // 设置文本颜色
+                                            player.spigot().sendMessage(component);
+                                            return true;
+                                        }
+                                        i.setEscapeTime(escapeTime);
+                                    }
+                                String msg = new PlaceholderFormat(plugin.prisonConfig.message.get("OwnerChallengeMsg")).format(i.getEscapeTime());
                                 component.setText(msg);
                                 component.setColor(ChatColor.GREEN); // 设置文本颜色
                                 player.spigot().sendMessage(component);
@@ -169,7 +184,9 @@ public class PrisonEscapeCommandListener implements CommandExecutor {
                                 hasResult = true;
                             }
                         }
-                        for(PrisonData i: plugin.prisonDataList.values()){
+                        Map<String, PrisonData> map = new ConcurrentHashMap<>();
+                        map.putAll(plugin.prisonDataList);
+                        for(PrisonData i: map.values()){
                             if(i.getResName().equals(res.getResidenceName())){
                                 if(plugin.prisonerList.containsValue(i)){
                                     component.setText(plugin.prisonConfig.message.get("CantSetSpawnChallengingMsg"));
@@ -177,7 +194,20 @@ public class PrisonEscapeCommandListener implements CommandExecutor {
                                     player.spigot().sendMessage(component);
                                     return true;
                                 }
-                                String msg = new PlaceholderFormat(plugin.prisonConfig.message.get("OwnerChallengeResetMsg")).format(plugin.escapeTime);
+                                int escapeTime;
+                                if(args.length > 1)
+                                    if(StringUtil.isNumeric(args[1])) {
+                                        escapeTime = Integer.parseInt(args[1]);
+                                        if(escapeTime < plugin.escapeTime){
+                                            String tip = new PlaceholderFormat(plugin.prisonConfig.message.get("NewEscapeTimeAtLeastMsg")).format(plugin.escapeTime);
+                                            component = new TextComponent(tip);
+                                            component.setColor(ChatColor.RED); // 设置文本颜色
+                                            player.spigot().sendMessage(component);
+                                            return true;
+                                        }
+                                        i.setEscapeTime(escapeTime);
+                                    }
+                                String msg = new PlaceholderFormat(plugin.prisonConfig.message.get("OwnerChallengeResetMsg")).format(i.getEscapeTime());
                                 component.setText(msg);
                                 component.setColor(ChatColor.GREEN); // 设置文本颜色
                                 player.spigot().sendMessage(component);
@@ -288,7 +318,9 @@ public class PrisonEscapeCommandListener implements CommandExecutor {
                             player.spigot().sendMessage(component);
                             return true;
                         }
-                        for(Map.Entry<Player, PrisonData> entry:plugin.prisonerList.entrySet()){
+                        Map<Player, PrisonData> map = new ConcurrentHashMap<>();
+                        map.putAll(plugin.prisonerList);
+                        for(Map.Entry<Player, PrisonData> entry:map.entrySet()){
                             Player prisonPlayer = entry.getKey();
                             PrisonData prisonData = entry.getValue();
                             if(prisonData.getResName().equals(res.getResidenceName())){
@@ -306,7 +338,9 @@ public class PrisonEscapeCommandListener implements CommandExecutor {
                                 prisonPlayer.spigot().sendMessage(component);
                             }
                         }
-                        for(PrisonData i : plugin.prisonTempList.values()){
+                        Map<String, PrisonData> map1 = new ConcurrentHashMap<>();
+                        map1.putAll(plugin.prisonTempList);
+                        for(PrisonData i : map1.values()){
                             if(i.getResName().equals(res.getResidenceName())){
                                 TextComponent component = new TextComponent(plugin.prisonConfig.message.get("RemovePrisonOverMsg"));
                                 component.setColor(ChatColor.RED); // 设置文本颜色
@@ -316,7 +350,9 @@ public class PrisonEscapeCommandListener implements CommandExecutor {
                                 plugin.prisonTempList.remove(i.getPrisonName());
                             }
                         }
-                        for(PrisonData i : plugin.prisonDataList.values()){
+                        map1.clear();
+                        map1.putAll(plugin.prisonDataList);
+                        for(PrisonData i : map1.values()){
                             if(i.getResName().equals(res.getResidenceName())){
                                 TextComponent component = new TextComponent(plugin.prisonConfig.message.get("RemovePrisonOverMsg"));
                                 component.setColor(ChatColor.RED); // 设置文本颜色
@@ -399,7 +435,7 @@ public class PrisonEscapeCommandListener implements CommandExecutor {
                                 res.getPermissions().setPlayerFlag(playerName,"tp", FlagPermissions.FlagState.TRUE);
                                 player.teleport(prisonData.getPrisonSpawn());
 
-                                String msg = new PlaceholderFormat(plugin.prisonConfig.message.get("PlayerChallengeMsg")).format(plugin.escapeTime);
+                                String msg = new PlaceholderFormat(plugin.prisonConfig.message.get("PlayerChallengeMsg")).format(prisonData.getEscapeTime());
                                 component.setText(msg);
                                 component.setColor(ChatColor.GREEN); // 设置文本颜色
                                 player.spigot().sendMessage(component);
@@ -432,7 +468,9 @@ public class PrisonEscapeCommandListener implements CommandExecutor {
                             //2.移除游戏进行列表
                             plugin.prisonerList.remove(player);
                             //3.典狱长挑战，则恢复原样
-                            for(PrisonData i: plugin.prisonTempList.values()){
+                            Map<String, PrisonData> map = new ConcurrentHashMap<>();
+                            map.putAll(plugin.prisonTempList);
+                            for(PrisonData i: map.values()){
                                 //临时挑战
                                 ClaimedResidence res = getResidenceManager().getByName(i.getResName());
                                 if(player.getName().equals(i.getPrisonOwner())){
@@ -458,6 +496,8 @@ public class PrisonEscapeCommandListener implements CommandExecutor {
                                     TextComponent component = new TextComponent(plugin.prisonConfig.message.get("ExitChallengeMsg"));
                                     component.setColor(ChatColor.RED); // 设置文本颜色
                                     player.spigot().sendMessage(component);
+                                    Location spawnLoc = Objects.requireNonNull(Bukkit.getWorld("world")).getSpawnLocation();
+                                    player.teleport(spawnLoc);
                                 }
                             }
                         }
@@ -548,7 +588,7 @@ public class PrisonEscapeCommandListener implements CommandExecutor {
             }
         }
         // 创建一个一次性的定时任务，延迟10秒后执行
-        PrisonTask task = new ResOwnerTask(player, plugin.escapeTime, prisonData);
+        PrisonTask task = new ResOwnerTask(player, prisonData.getEscapeTime(), prisonData);
         player.getInventory().clear();
         task.runTaskTimer(plugin,20L,20L);
 
@@ -619,7 +659,7 @@ public class PrisonEscapeCommandListener implements CommandExecutor {
                 countdown--;
             }
         }
-        PrisonTask task = new ResChallengerTask(player, plugin.escapeTime,prisonData);
+        PrisonTask task = new ResChallengerTask(player, prisonData.getEscapeTime(),prisonData);
         player.getInventory().clear();
         task.runTaskTimer(plugin, 20L,20L);
 

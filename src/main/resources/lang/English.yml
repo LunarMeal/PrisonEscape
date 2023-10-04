@@ -1,6 +1,6 @@
 usage: "Usage:\n
         /pecp create <prisonName>     Create a prison in your current residence\n
-        /pecp setspawn      Set the current location as the prison respawn point\n
+        /pecp setspawn <escapeTime>     Set the current location as the prison respawn point\n
         /pecp edit <prisonName>     Open the prison editing menu\n
         /pecp remove <prisonName>    Remove the prison you're currently in\n
         /pecp list     Display the server's list of prisons\n
@@ -13,7 +13,7 @@ ErrorMsg: "Error!!!"
 OnlyResOwnerCreateMsg: "Only the residence owner can create a prison here!!!"
 ResHasPrisonMsg: "There is already a prison in this residence!!!"
 ResNameOnlyMsg: "This prison name is already in use, please choose another one!!!"
-SetSpawnTipMsg: "Please use the command /pecp setspawn to set the prison respawn point"
+SetSpawnTipMsg: "Please use the command /pecp setspawn <escapeTime> to set the prison respawn point and escape time"
 SetSpawnInResMsg: "You must set the respawn point inside the prison!!!"
 MustOwnerSetSpawnMsg: "Only the prison warden can set the respawn point here!!!"
 OwnerChallengeMsg: "The respawn point has been set. The warden must challenge and escape within {escapeTime} seconds to register the prison!!!"

@@ -44,6 +44,15 @@ public class PrisonTabCompleter implements TabCompleter {
                 if(i.getPrisonOwner().equals(player.getName()))
                     suggestions.add(i.getPrisonName());
             }
+        } else if (args.length == 2 && "setspawn".startsWith(args[0])) {
+            for(PrisonData i: plugin.prisonDataList.values())
+                if(i.getPrisonOwner()!=null)
+                    if(i.getPrisonOwner().equals(player.getName()))
+                        suggestions.add(String.valueOf(i.getEscapeTime()));
+            for(PrisonData i: plugin.prisonTempList.values())
+                if(i.getPrisonOwner()!=null)
+                    if(i.getPrisonOwner().equals(player.getName()))
+                        suggestions.add(String.valueOf(i.getEscapeTime()));
         }
 
         return suggestions;

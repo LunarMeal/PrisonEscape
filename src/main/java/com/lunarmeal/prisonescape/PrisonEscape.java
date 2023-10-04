@@ -17,6 +17,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 
 public final class PrisonEscape extends JavaPlugin {
 
@@ -91,14 +92,25 @@ public final class PrisonEscape extends JavaPlugin {
     }
 
     private void initPrisons() {
-        for (PrisonData i : prisonDataList.values()) {
+        Map<String, PrisonData> map = new ConcurrentHashMap<>();
+        map.putAll(prisonDataList);
+        for (PrisonData i : map.values()) {
             ClaimedResidence res = ResidenceApi.getResidenceManager().getByName(i.getResName());
-            if (!res.getOwner().equals(i.getPrisonOwner())) {
-                res.getPermissions().setOwner(i.getPrisonOwner(), true);
-                for (Map.Entry<String, Boolean> entry : i.getResFlags().entrySet())
-                    res.getPermissions().setFlag(entry.getKey(), entry.getValue() ? FlagPermissions.FlagState.TRUE : FlagPermissions.FlagState.FALSE);
+            if(res == null){
+                map.remove(i.getPrisonName());
+                databaseManager.deleteData(i.getPrisonName());
+            }else if(!res.containsLoc(i.getPrisonSpawn())){
+                map.remove(i.getPrisonName());
+                databaseManager.deleteData(i.getPrisonName());
+            }else {
+                if (!res.getOwner().equals(i.getPrisonOwner())) {
+                    res.getPermissions().setOwner(i.getPrisonOwner(), true);
+                    for (Map.Entry<String, Boolean> entry : i.getResFlags().entrySet())
+                        res.getPermissions().setFlag(entry.getKey(), entry.getValue() ? FlagPermissions.FlagState.TRUE : FlagPermissions.FlagState.FALSE);
+                }
             }
         }
+        prisonDataList.putAll(map);
     }
 
     private void registerEvents() {
@@ -111,9 +123,11 @@ public final class PrisonEscape extends JavaPlugin {
     private void savePrisonOwners() {
         for (PrisonData i : prisonTempList.values()) {
             ClaimedResidence res = ResidenceApi.getResidenceManager().getByName(i.getResName());
-            res.getPermissions().setOwner(i.getPrisonOwner(), true);
-            for (Map.Entry<String, Boolean> entry : i.getResFlags().entrySet())
-                res.getPermissions().setFlag(entry.getKey(), entry.getValue() ? FlagPermissions.FlagState.TRUE : FlagPermissions.FlagState.FALSE);
+            if(res!=null) {
+                res.getPermissions().setOwner(i.getPrisonOwner(), true);
+                for (Map.Entry<String, Boolean> entry : i.getResFlags().entrySet())
+                    res.getPermissions().setFlag(entry.getKey(), entry.getValue() ? FlagPermissions.FlagState.TRUE : FlagPermissions.FlagState.FALSE);
+            }
         }
     }
 

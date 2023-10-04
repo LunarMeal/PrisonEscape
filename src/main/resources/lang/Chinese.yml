@@ -1,6 +1,6 @@
 usage: "用法：\n
         /pecp create <监狱名>     在当前领地上创建监狱\n
-        /pecp setspawn      将当前位置设置为监狱重生点\n
+        /pecp setspawn <逃离时间>      将当前位置设置为监狱重生点\n
         /pecp edit <监狱名>     打开监狱编辑菜单\n
         /pecp remove <监狱名>    移除当前所在监狱\n
         /pecp list     展示服务器监狱列表\n
@@ -13,7 +13,7 @@ ErrorMsg: "错误！！！"
 OnlyResOwnerCreateMsg: "只有领地主人才能在这创建监狱！！！"
 ResHasPrisonMsg: "此领地上已有监狱！！！"
 ResNameOnlyMsg: "此监狱名已被使用，请更换！！！"
-SetSpawnTipMsg: "请用指令/pecp setspawn设置监狱重生点"
+SetSpawnTipMsg: "请用指令/pecp setspawn <逃离时间> 设置监狱重生点并设置逃离时间"
 SetSpawnInResMsg: "必须在监狱内设置重生点！！！"
 MustOwnerSetSpawnMsg: "只有典狱长才能在这设置重生点！！！"
 OwnerChallengeMsg: "已设置重生点，请典狱长先挑战在{escapeTime}秒内逃出监狱，成功逃脱后即可注册监狱！"
