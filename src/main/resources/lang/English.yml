@@ -64,6 +64,7 @@ ResChangeFlagMsg: "This residence is a prison and cannot change flags!!!"
 ResRemoveNoticeMsg: "The residence has been detected as removed, and the prison challenge has been aborted!!!"
 ResRemoveTipMsg: "The residence has been registered as a prison. After deleting the residence, the prison will also disappear!!!"
 ResChangeSizeMsg: "This residence is a prison and cannot change its size!!!"
+ConfirmMsg: "You need to use your {Counter} funds as a wager. If you fail to escape, you will lose the corresponding wager amount. If you succeed, you will receive the corresponding wager amount. Are you sure you want to accept the challenge? Please enter the command /pecp confirm again."
 RuleMsg: "Rules: 1. Land owners can create prisons on their own land and become the warden of the prison.\n
 2. Set the prison's respawn point and escape time (prisoners will be teleported here initially and must escape within the specified time. Escaping from prison means leaving the territory).\n
 3. After setting the respawn point, the warden must successfully escape within the specified time (their land permissions will be downgraded to that of prisoners). If they die, quit, or timeout, the prison registration will fail (i.e., become invalid).\n

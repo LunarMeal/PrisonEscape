@@ -40,6 +40,7 @@ public class PlayerListener implements Listener {
         Player player = event.getPlayer();
         player.closeInventory();
         plugin.editorList.remove(player);
+        plugin.confirmList.remove(player);
         if(plugin.waitingForChange!=null)
             if(plugin.waitingForChange.equals(player))
                 plugin.waitingForChange = null;
@@ -106,6 +107,7 @@ public class PlayerListener implements Listener {
         // 获取死亡的玩家
         Player player = event.getEntity();
         plugin.editorList.remove(player);
+        plugin.confirmList.remove(player);
         if(plugin.waitingForChange!=null)
             if(plugin.waitingForChange.equals(player))
                 plugin.waitingForChange = null;
@@ -189,6 +191,8 @@ public class PlayerListener implements Listener {
             if(plugin.waitingForChange.equals(player))
                 plugin.waitingForChange = null;
 
+        if(!command.equals("/pecp confirm"))
+            plugin.confirmList.remove(player);
         if (plugin.prisonerList.containsKey(player)) {
             if(!command.startsWith("/prisonescape") && !command.startsWith("/pecp") && !command.startsWith("/psecp")) {
                 // 如果正在拦截指令，取消事件并存储指令
@@ -203,6 +207,7 @@ public class PlayerListener implements Listener {
     public void onPlayerChat(AsyncPlayerChatEvent event) {
         Player player = event.getPlayer();
         // 检查是否有玩家在等待输入
+        plugin.confirmList.remove(player);
         if(plugin.waitingForChange != null)
             if (plugin.waitingForChange.equals(player)) {
                 String input = event.getMessage(); // 获取玩家在聊天中输入的消息

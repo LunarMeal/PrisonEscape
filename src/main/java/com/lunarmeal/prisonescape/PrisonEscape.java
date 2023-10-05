@@ -30,6 +30,7 @@ public final class PrisonEscape extends JavaPlugin {
     public Map<String, PrisonData> prisonDataList;
     public Map<Player, PrisonData> prisonerList;
     public Map<Player, PrisonData> editorList;
+    public Map<Player, PrisonData> confirmList;
     public List<World> worldBlackList;
     public int escapeTime;
     public float counter;
@@ -50,6 +51,7 @@ public final class PrisonEscape extends JavaPlugin {
         prisonTempList = new HashMap<>();
         prisonerList = new HashMap<>();
         editorList = new HashMap<>();
+        confirmList = new HashMap<>();
         worldBlackList = new ArrayList<>();
         escapeTime = 600;
         counter = 100;

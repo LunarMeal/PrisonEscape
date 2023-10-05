@@ -140,6 +140,7 @@ public class ResChangedListener implements Listener {
                     SchemManager.deleteSchematic("plugins/PrisonEscape/schems/prison_"+i.getPrisonID()+".schem");
                 }
                 plugin.prisonTempList.remove(i.getPrisonName());
+                i = null;
             }
         }
         map1.clear();
@@ -154,6 +155,7 @@ public class ResChangedListener implements Listener {
                 plugin.databaseManager.deleteData(i.getPrisonName());
                 SchemManager.deleteSchematic("plugins/PrisonEscape/schems/prison_"+i.getPrisonID()+".schem");
                 plugin.prisonDataList.remove(i.getPrisonName());
+                i = null;
             }
         }
     }

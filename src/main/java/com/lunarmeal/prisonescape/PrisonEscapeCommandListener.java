@@ -379,7 +379,6 @@ public class PrisonEscapeCommandListener implements CommandExecutor {
                         player.spigot().sendMessage(component);
                         break;
                     }
-
                     case "challenge":{
                         if(plugin.prisonerList.containsKey(player)){
                             component.setText(plugin.prisonConfig.message.get("plzCompleteMsg"));
@@ -430,19 +429,17 @@ public class PrisonEscapeCommandListener implements CommandExecutor {
                                         player.spigot().sendMessage(component);
                                         return true;
                                     }
+                                    String msg = new PlaceholderFormat(plugin.prisonConfig.message.get("ConfirmMsg")).format(prisonData.getCounter());
+                                    component.setText(msg);
+                                    component.setColor(ChatColor.GREEN); // 设置文本颜色
+                                    player.spigot().sendMessage(component);
+                                }else{
+                                    String msg = new PlaceholderFormat(plugin.prisonConfig.message.get("ConfirmMsg")).format(0);
+                                    component.setText(msg);
+                                    component.setColor(ChatColor.GREEN); // 设置文本颜色
+                                    player.spigot().sendMessage(component);
                                 }
-                                res.getPermissions().setPlayerFlag(playerName,"move", FlagPermissions.FlagState.TRUE);
-                                res.getPermissions().setPlayerFlag(playerName,"tp", FlagPermissions.FlagState.TRUE);
-                                player.teleport(prisonData.getPrisonSpawn());
-
-                                String msg = new PlaceholderFormat(plugin.prisonConfig.message.get("PlayerChallengeMsg")).format(prisonData.getEscapeTime());
-                                component.setText(msg);
-                                component.setColor(ChatColor.GREEN); // 设置文本颜色
-                                player.spigot().sendMessage(component);
-                                TitleMessage.sendTitle(player,plugin.prisonConfig.message.get("BeginChallengeTitle"),"",20,60,20);
-
-                                PrisonTask task = ChallengePrison(prisonData);
-                                prisonData.addTaskToList(player,task);
+                                plugin.confirmList.put(player,prisonData);
                             }else{
                                 component.setText(plugin.prisonConfig.message.get("NotHavePrisonMsg"));
                                 component.setColor(ChatColor.RED); // 设置文本颜色
@@ -512,6 +509,26 @@ public class PrisonEscapeCommandListener implements CommandExecutor {
                         component.setText(plugin.prisonConfig.message.get("RuleMsg"));
                         component.setColor(ChatColor.YELLOW); // 设置文本颜色
                         player.spigot().sendMessage(component);
+                        break;
+                    }
+                    case "confirm":{
+                        PrisonData prisonData = plugin.confirmList.get(player);
+                        if(prisonData!=null) {
+                            res = getResidenceManager().getByName(prisonData.getResName());
+                            res.getPermissions().setPlayerFlag(playerName, "move", FlagPermissions.FlagState.TRUE);
+                            res.getPermissions().setPlayerFlag(playerName, "tp", FlagPermissions.FlagState.TRUE);
+                            player.teleport(prisonData.getPrisonSpawn());
+
+                            String msg = new PlaceholderFormat(plugin.prisonConfig.message.get("PlayerChallengeMsg")).format(prisonData.getEscapeTime());
+                            component.setText(msg);
+                            component.setColor(ChatColor.GREEN); // 设置文本颜色
+                            player.spigot().sendMessage(component);
+                            TitleMessage.sendTitle(player, plugin.prisonConfig.message.get("BeginChallengeTitle"), "", 20, 60, 20);
+
+                            PrisonTask task = ChallengePrison(prisonData);
+                            prisonData.addTaskToList(player, task);
+                        }
+                        plugin.confirmList.remove(player);
                         break;
                     }
                     default:{
@@ -642,6 +659,9 @@ public class PrisonEscapeCommandListener implements CommandExecutor {
 
                     for (Map.Entry<String, Boolean> entry : pData.getResFlags().entrySet())
                         residence.getPermissions().setFlag(entry.getKey(), entry.getValue() ? FlagPermissions.FlagState.TRUE : FlagPermissions.FlagState.FALSE);
+
+                    residence.getPermissions().setPlayerFlag(timerPlayer.getName(),"move", FlagPermissions.FlagState.FALSE);
+                    residence.getPermissions().setPlayerFlag(timerPlayer.getName(),"tp", FlagPermissions.FlagState.FALSE);
 
                     pData.setFree(true);
                     pData.getTaskList().remove(timerPlayer);
